@@ -39,12 +39,12 @@ it("renders without crashing", () => {
 
 it("renders loading text initially", async () => {
   const app = mount(<App />);
-  expect(app).toHaveText("Loading...");
+  await flushRequestsAndUpdate(app);
+  expect(app.find("h1").text()).toHaveText("Loading...");
 });
 
 it("renders a table after data load", async () => {
   const app = mount(<App />);
-  expect(app).toHaveText("Loading...");
   await flushRequestsAndUpdate(app);
   expect(app.find("table")).toExist();
 });
@@ -76,13 +76,13 @@ it("renders table that is sorted ascending", async () => {
 it("calculates total revenue of all branches", async () => {
   const app = mount(<App />);
   await flushRequestsAndUpdate(app);
-  expect(app.find("tfoot td:last-child").text()).toEqual("2,102,619.44");
+  expect(app.find("tfoot td:last-child").text()).toEqual("£2,102,619.44");
 });
 
 it("filters the displayed products", async () => {
   const app = mount(<App />);
   await flushRequestsAndUpdate(app);
   const changeEvent = { target: { value: "pear" } };
-  app.find("input").simulate("change", changeEvent);
-  expect(app.find("tfoot td:last-child").text()).toEqual("60,681.02");
+  app.find("#search").simulate("change", changeEvent);
+  expect(app.find("tfoot td:last-child").text()).toEqual("£60,681.02");
 });

@@ -7,7 +7,7 @@ export default async function FetchApi({ dispatch = () => {}, postType = 'pages'
   try {
     // Build up the object that is passed to fetch api
     const fetchObject = {
-      url: `${config.url}${url}`,
+      url: `${url}`,
       fetchApiProperties: {
         method,
         mode: 'cors',
@@ -31,10 +31,6 @@ export default async function FetchApi({ dispatch = () => {}, postType = 'pages'
       status: originalResponseStatus.status,
       headers: originalResponseStatus.headers ? originalResponseStatus.headers : null,
       body: responseBody,
-    }
-
-    if (!response.ok) {
-      throw responseObject
     }
 
     return responseObject.body
